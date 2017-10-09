@@ -1,0 +1,18 @@
+sudo: required
+
+language: ruby
+
+services:
+  - docker
+
+script:
+  - docker build -t exozet/rabbitmq-delay-management:3.6.12 .
+
+before_deploy:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+
+deploy:
+  provider: script
+  script: docker push exozet/rabbitmq-delay-management:3.6.12
+  on:
+    branch: master
